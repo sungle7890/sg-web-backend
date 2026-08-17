@@ -1,0 +1,15 @@
+# ===== Local (development) only =====
+# Local PostgreSQL. These are convenient development defaults; being local-only,
+# they are safe to keep in the repo.
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/sgweb
+spring.datasource.username=sgweb
+spring.datasource.password=sgweb
+
+# Auto create/update the schema (development convenience)
+spring.jpa.hibernate.ddl-auto=update
+# Log executed SQL to the console (useful during development)
+spring.jpa.show-sql=true
+
+# CORS: allow the frontend Vite dev server
+app.cors.allowed-origins=http://localhost:5173,http://127.0.0.1:5173

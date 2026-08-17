@@ -1,0 +1,24 @@
+# ===== Production only =====
+# Do not hard-code secrets (DB credentials, etc.) here — inject them via env vars.
+# Example (on the server):
+#   export SPRING_PROFILES_ACTIVE=prod
+#   export DB_URL=jdbc:postgresql://<host>:5432/<db>
+#   export DB_USERNAME=<user>
+#   export DB_PASSWORD=<password>
+#   export APP_CORS_ALLOWED_ORIGINS=https://your-domain.com
+#   java -jar backend.jar
+
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+
+# In production, do not auto-alter the schema — only validate it (manage via a migration tool).
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=false
+
+# CORS: allow only the real frontend domain(s). Comma-separated for multiple.
+app.cors.allowed-origins=${APP_CORS_ALLOWED_ORIGINS}
+
+# Logging
+logging.level.root=INFO
+logging.level.com.sg.backend=INFO
