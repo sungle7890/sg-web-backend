@@ -38,17 +38,20 @@ com.sg.backend/
 - Exceptions are handled consistently in `ApiExceptionHandler` in a standard format.
 - Auth/security extends by adding a `SecurityConfig` under `config/` (not applied yet).
 
-## Configuration files (not committed)
+## Configuration files
 
-Real config files are excluded from version control; only `*.example` templates are committed.
-Copy a template to its real name first:
+- `application.properties` (base) and `application-prod.properties` are **committed** — they hold
+  no secrets (prod uses env-var placeholders like `${DB_URL}`), and the deployed artifact needs them.
+- `application-local.properties` is **git-ignored** (it may hold a local DB password). Create it from
+  the template before running locally:
 
 ```bash
 cd src/main/resources
-cp application.properties.example        application.properties
-cp application-local.properties.example  application-local.properties
-cp application-prod.properties.example   application-prod.properties
+cp application-local.properties.example application-local.properties
 ```
+
+Real secrets (DB credentials, etc.) are always injected as **environment variables** at runtime,
+never committed.
 
 ## Prerequisite: PostgreSQL
 

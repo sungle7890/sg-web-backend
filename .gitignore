@@ -5,11 +5,11 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### Config files: excluded from version control (commit only *.example) ###
-# Test config (src/test/resources/application.properties) is committed (H2, no secrets).
-src/main/resources/application.properties
+### Config files ###
+# Local dev config may hold a local DB password -> excluded (see *.example).
+# Base + prod config carry NO secrets (prod uses env-var placeholders) -> committed so the
+# deployed artifact contains them. Real secrets are injected as env vars at runtime.
 src/main/resources/application-local.properties
-src/main/resources/application-prod.properties
 
 ### STS ###
 .apt_generated
