@@ -6,9 +6,16 @@ data class LoginRequest(
     val password: String = "",
 )
 
-/** Token response returned on successful login */
+/** Refresh request body */
+data class RefreshRequest(
+    val refreshToken: String = "",
+)
+
+/** Token pair returned on login and refresh */
 data class TokenResponse(
-    val token: String,
+    val accessToken: String,
+    val refreshToken: String,
     val tokenType: String = "Bearer",
-    val expiresInMs: Long,
+    val accessExpiresInMs: Long,
+    val refreshExpiresInMs: Long,
 )
