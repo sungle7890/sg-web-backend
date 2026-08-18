@@ -2,6 +2,7 @@ package com.sg.backend.common
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
@@ -22,4 +23,9 @@ class ApiExceptionHandler {
     @ExceptionHandler(NotFoundException::class)
     fun handleNotFound(ex: NotFoundException): ProblemDetail =
         ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message ?: "리소스를 찾을 수 없습니다.")
+
+    /** Failed login / bad credentials -> 401 */
+    @ExceptionHandler(AuthenticationException::class)
+    fun handleAuth(ex: AuthenticationException): ProblemDetail =
+        ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "인증에 실패했습니다.")
 }
