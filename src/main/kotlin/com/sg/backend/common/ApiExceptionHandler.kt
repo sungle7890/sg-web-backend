@@ -1,5 +1,6 @@
 package com.sg.backend.common
 
+import com.sg.backend.lottery.LotteryException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
 import org.springframework.security.core.AuthenticationException
@@ -28,4 +29,9 @@ class ApiExceptionHandler {
     @ExceptionHandler(AuthenticationException::class)
     fun handleAuth(ex: AuthenticationException): ProblemDetail =
         ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "인증에 실패했습니다.")
+
+    /** Lottery predictor failure -> 500 */
+    @ExceptionHandler(LotteryException::class)
+    fun handleLottery(ex: LotteryException): ProblemDetail =
+        ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.message ?: "예측에 실패했습니다.")
 }
