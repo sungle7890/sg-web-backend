@@ -44,3 +44,7 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Python (predictor) ###
+__pycache__/
+*.py[cod]
