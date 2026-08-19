@@ -26,26 +26,33 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
  *   - Public:        GET /api/labels, /api/health, POST /api/auth/login
  *   - Authenticated: writes (POST/DELETE /api/labels)
  *
- * A single admin account is seeded from env vars (ADMIN_USERNAME/ADMIN_PASSWORD);
- * there is no public registration.
+ * Two accounts are seeded from env vars (no public registration):
+ *   - admin (ROLE_ADMIN): ADMIN_USERNAME / ADMIN_PASSWORD
+ *   - user  (ROLE_USER):  USER_USERNAME / USER_PASSWORD
  */
 @Configuration
 class SecurityConfig(
     @Value("\${app.admin.username}") private val adminUsername: String,
     @Value("\${app.admin.password}") private val adminPassword: String,
+    @Value("\${app.user.username}") private val userUsername: String,
+    @Value("\${app.user.password}") private val userPassword: String,
     @Value("\${app.cors.allowed-origins}") private val allowedOrigins: List<String>,
 ) {
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
-    /** Single seeded admin user (in-memory). Swap for a DB-backed UserDetailsService for multi-user. */
+    /** Seeded users (in-memory). Swap for a DB-backed UserDetailsService for multi-user. */
     @Bean
     fun userDetailsService(encoder: PasswordEncoder): UserDetailsService {
         val admin = User.withUsername(adminUsername)
             .password(encoder.encode(adminPassword))
             .roles("ADMIN")
             .build()
-        return InMemoryUserDetailsManager(admin)
+        val user = User.withUsername(userUsername)
+            .password(encoder.encode(userPassword))
+            .roles("USER")
+            .build()
+        return InMemoryUserDetailsManager(admin, user)
     }
 
     @Bean
