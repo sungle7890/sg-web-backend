@@ -48,3 +48,9 @@ out/
 ### Python (predictor) ###
 __pycache__/
 *.py[cod]
+
+### Local secrets (never commit) ###
+secrets/
+
+### macOS ###
+.DS_Store
